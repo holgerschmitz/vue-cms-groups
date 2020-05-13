@@ -12,6 +12,7 @@ Vue.use(Auth, {
   client_id: '0oak3zy3jhU7IZdW70h7',
   redirect_uri: window.location.origin + '/implicit/callback',
   scopes: ['openid','profile'],
+  pkce: true
 });
 
 const router = new Router({
@@ -53,6 +54,10 @@ const router = new Router({
   ]
 })
 
-router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
+router.beforeEach(Vue.prototype.$auth.authRedirectGuard());
+
+router.safeNavigate = function(route, dest) {
+  if (route.name != dest) this.push({ name: dest });
+}
 
 export default router;

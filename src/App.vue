@@ -10,8 +10,8 @@
       <md-menu md-direction="bottom-start">
         <md-button md-menu-trigger><md-icon>menu</md-icon></md-button>
         <md-menu-content>
-          <md-menu-item @click="$router.push({ name: 'home' })">Home</md-menu-item>
-          <md-menu-item @click="$router.push({ name: 'read' })">Read</md-menu-item>
+          <md-menu-item @click="$router.safeNavigate($route, 'home')">Home</md-menu-item>
+          <md-menu-item @click="$router.safeNavigate($route, 'read')">Read</md-menu-item>
         </md-menu-content>
     </md-menu>
     </md-toolbar>
@@ -43,7 +43,7 @@ export default {
       await this.isAuthenticated();
 
       // Navigate back to home
-      this.$router.push({ path: '/' })
+      if (this.$route.path !== '/') this.$router.push({ path: '/' })
     }
   },
   created() {
